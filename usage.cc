@@ -6,7 +6,7 @@ namespace
 R"(
 =========================================================
 
-                      Chaos Equations
+     Chaos Equations by HackerPoet and BobbyBobster
 
     These are plots of random recursive equations, which
 often produce chaos, and results in beautiful patterns.
@@ -41,9 +41,6 @@ Controls:
 
 void usage()
 {
-    std::cout <<
-    "Chaos Equations by HackerPoet & BobbyBobster\n" 
-    << opening <<
-    "Usage: " << options;
+    std::cout << opening << options;
 }
 
