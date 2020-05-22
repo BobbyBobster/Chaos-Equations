@@ -1,0 +1,15 @@
+#define MAIN "main.cc"
+#define SOURCES "*.cc"
+#define OBJ_EXT ".o"
+#define TMP_DIR "tmp"
+#define USE_ECHO ON
+#define DEFCOM "program"
+
+#define CXX "g++"
+#define CXXFLAGS " -std=c++2a -Wall -Wextra -O2"
+#define IH ".ih"
+#define PRECOMP "-x c++-header"
+//#define REFRESH
+#define LDFLAGS ""
+#define ADD_LIBRARIES "sfml-graphics sfml-window sfml-system"
+#define ADD_LIBRARY_PATHS ""

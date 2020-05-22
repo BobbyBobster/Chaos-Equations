@@ -5,6 +5,10 @@
 # C++
 *.o
 *.a
+*.gch
+
+# Temporary files
+tmp
 
 # Executables
 *.out
