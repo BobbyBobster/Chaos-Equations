@@ -45,15 +45,15 @@ static sf::Vector2f ToScreen(double x, double y)
 static void RandParams(double* params) 
 {
     std::uniform_int_distribution<int> rand_int(0, 3);
-    for (int i = 0; i < num_params; ++i) 
+    for (size_t idx = 0; idx != num_params; ++idx) 
     {
-        const int r = rand_int(rand_gen);
-        if (r == 0) 
-            params[i] = 1.0f;
-        else if (r == 1) 
-            params[i] = -1.0f;
+        int const rand = rand_int(rand_gen);
+        if (rand == 0) 
+            params[idx] = 1.0f;
+        else if (rand == 1) 
+            params[idx] = -1.0f;
         else 
-            params[i] = 0.0f;
+            params[idx] = 0.0f;
     }
 }
 
@@ -81,19 +81,20 @@ static std::string ParamsToString(const double* params)
 
 static void StringToParams(const std::string& str, double* params) 
 {
-    for (int i = 0; i < num_params/3; ++i) 
+    // TODO STYLE: use != instead of <
+    for (size_t idx = 0; idx < num_params/3; ++idx) 
     {
         int a = 0;
-        const char c = (i < str.length() ? str[i] : '_');
+        char const c = idx < str.length() ? str[idx] : '_';
         if (c >= 'A' && c <= 'Z') 
             a = int(c - 'A') + 1;
         else if (c >= 'a' && c <= 'z') 
             a = int(c - 'a') + 1;
-        params[i*3 + 2] = double(a % 3) - 1.0;
+        params[idx*3 + 2] = double(a % 3) - 1.0;
         a /= 3;
-        params[i*3 + 1] = double(a % 3) - 1.0;
+        params[idx*3 + 1] = double(a % 3) - 1.0;
         a /= 3;
-        params[i*3 + 0] = double(a % 3) - 1.0;
+        params[idx*3 + 0] = double(a % 3) - 1.0;
     }
 }
 
@@ -223,7 +224,7 @@ static void CenterPlot(const std::vector<sf::Vector2f>& history)
    };
    */
 
-int main(int argc, char *argv[]) 
+int main() 
 {
     usage();
     //Set random seed
@@ -436,7 +437,7 @@ int main(int argc, char *argv[])
             }
 
             //Draw new points
-            static const float dot_sizes[] = { 1.0f, 3.0f, 10.0f };
+            //static const float dot_sizes[] = { 1.0f, 3.0f, 10.0f };
             //glEnable(GL_POINT_SMOOTH);
             //glPointSize(dot_sizes[dot_type]);
             window.draw(vertex_array.data(), 
