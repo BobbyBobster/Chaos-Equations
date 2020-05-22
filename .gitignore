@@ -6,5 +6,6 @@
 *.o
 *.a
 
-# SFML
-sfml-app
+# Executables
+*.out
+
