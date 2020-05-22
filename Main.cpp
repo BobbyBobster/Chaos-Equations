@@ -6,12 +6,7 @@
 #include <cassert>
 #include <fstream>
 #include "resource.h"
-
-//The dreaded windows include file...
-#define WIN32_LEAN_AND_MEAN //Reduce compile time of windows.h
-#include <Windows.h>
-#undef min
-#undef max
+#include <cfloat>
 
 //Global constants
 static const int num_params = 18;
@@ -24,8 +19,8 @@ static const double t_end = 3.0;
 static const bool fullscreen = false;
 
 //Global variables
-static int window_w = 1600;
-static int window_h = 900;
+static int window_w = 800;
+static int window_h = 450;
 static int window_bits = 24;
 static float plot_scale = 0.25f;
 static float plot_x = 0.0f;
@@ -82,6 +77,7 @@ static std::string ParamsToString(const double* params) {
       n = 0;
     }
   }
+  std::cout << result << '\n';
   return result;
 }
 
@@ -173,9 +169,9 @@ static void CreateRenderWindow(sf::RenderWindow& window) {
   sf::ContextSettings settings;
   settings.depthBits = 24;
   settings.stencilBits = 8;
-  settings.antialiasingLevel = 8;
-  settings.majorVersion = 3;
-  settings.minorVersion = 0;
+  settings.antialiasingLevel = 0;
+  settings.majorVersion = 2;
+  settings.minorVersion = 1;
 
   //Create the window
   const sf::VideoMode screenSize(window_w, window_h, window_bits);
@@ -206,6 +202,7 @@ static void CenterPlot(const std::vector<sf::Vector2f>& history) {
   plot_scale = 1.0f / std::max(std::max(max_x - min_x, max_y - min_y) * 0.6f, 0.1f);
 }
 
+/*
 struct Res {
   Res(int id) {
     HRSRC src = ::FindResource(NULL, MAKEINTRESOURCE(id), RT_RCDATA);
@@ -215,6 +212,7 @@ struct Res {
   void* ptr;
   size_t size;
 };
+*/
 
 int main(int argc, char *argv[]) {
   std::cout << "=========================================================" << std::endl;
@@ -252,8 +250,8 @@ int main(int argc, char *argv[]) {
   rand_gen.seed((unsigned int)time(0));
 
   //Load the font
-  const Res res_font(IDR_FONT);
-  if (!font.loadFromMemory(res_font.ptr, res_font.size)) {
+  //const Res res_font(IDR_FONT);
+  if (!font.loadFromFile("./Roboto-Regular.ttf")) {
     std::cerr << "FATAL: Failed to load font." << std::endl;
     system("pause");
     return 1;
@@ -321,6 +319,7 @@ int main(int argc, char *argv[]) {
             window.close();
           } else if (keycode == sf::Keyboard::N) {
             ResetPlot();
+
             RandParams(params);
             GenerateNew(window, t, params);
           } else if (keycode == sf::Keyboard::P) {
@@ -429,8 +428,8 @@ int main(int argc, char *argv[]) {
 
       //Draw new points
       static const float dot_sizes[] = { 1.0f, 3.0f, 10.0f };
-      glEnable(GL_POINT_SMOOTH);
-      glPointSize(dot_sizes[dot_type]);
+      //glEnable(GL_POINT_SMOOTH);
+      //glPointSize(dot_sizes[dot_type]);
       window.draw(vertex_array.data(), vertex_array.size(), sf::PrimitiveType::Points);
 
       //Draw the equation
