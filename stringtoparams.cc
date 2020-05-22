@@ -1,9 +1,9 @@
 #include "main.ih"
 
-void StringToParams(const std::string& str, double* params) 
+void StringToParams(std::string const &str, double *params) 
 {
     // TODO STYLE: use != instead of <
-    for (size_t idx = 0; idx < num_params/3; ++idx) 
+    for (size_t idx = 0, num_p = num_params / 3; idx < num_p; ++idx) 
     {
         int a = 0;
         char const c = idx < str.length() ? str[idx] : '_';
