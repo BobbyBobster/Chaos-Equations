@@ -4,7 +4,7 @@ int main()
 {
     usage();
 
-    rand_gen.seed((unsigned int)time(0));
+    rand_gen.seed(123);
 
     if (!font.loadFromFile("./Roboto-Regular.ttf")) 
     {
