@@ -25,7 +25,8 @@ static sf::RectangleShape equ_box;
 static sf::Text t_text;
 static sf::RectangleShape t_box;
 
-static sf::Color GetRandColor(int i) {
+static sf::Color GetRandColor(int i) 
+{
   i += 1;
   int r = std::min(255, 50 + (i * 11909) % 256);
   int g = std::min(255, 50 + (i * 52973) % 256);
@@ -33,37 +34,42 @@ static sf::Color GetRandColor(int i) {
   return sf::Color(r, g, b, 16);
 }
 
-static sf::Vector2f ToScreen(double x, double y) {
+static sf::Vector2f ToScreen(double x, double y) 
+{
   const float s = plot_scale * float(window_h / 2);
   const float nx = float(window_w) * 0.5f + (float(x) - plot_x) * s;
   const float ny = float(window_h) * 0.5f + (float(y) - plot_y) * s;
   return sf::Vector2f(nx, ny);
 }
 
-static void RandParams(double* params) {
+static void RandParams(double* params) 
+{
   std::uniform_int_distribution<int> rand_int(0, 3);
-  for (int i = 0; i < num_params; ++i) {
+  for (int i = 0; i < num_params; ++i) 
+  {
     const int r = rand_int(rand_gen);
-    if (r == 0) {
+    if (r == 0) 
       params[i] = 1.0f;
-    } else if (r == 1) {
+    else if (r == 1) 
       params[i] = -1.0f;
-    } else {
+    else 
       params[i] = 0.0f;
-    }
   }
 }
 
-static std::string ParamsToString(const double* params) {
+static std::string ParamsToString(const double* params) 
+{
   const char base27[] = "_ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   static_assert(num_params % 3 == 0, "Params must be a multiple of 3");
   int a = 0;
   int n = 0;
   std::string result;
-  for (int i = 0; i < num_params; ++i) {
+  for (int i = 0; i < num_params; ++i) 
+  {
     a = a*3 + int(params[i]) + 1;
     n += 1;
-    if (n == 3) {
+    if (n == 3) 
+    {
       result += base27[a];
       a = 0;
       n = 0;
@@ -73,15 +79,16 @@ static std::string ParamsToString(const double* params) {
   return result;
 }
 
-static void StringToParams(const std::string& str, double* params) {
-  for (int i = 0; i < num_params/3; ++i) {
+static void StringToParams(const std::string& str, double* params) 
+{
+  for (int i = 0; i < num_params/3; ++i) 
+  {
     int a = 0;
     const char c = (i < str.length() ? str[i] : '_');
-    if (c >= 'A' && c <= 'Z') {
+    if (c >= 'A' && c <= 'Z') 
       a = int(c - 'A') + 1;
-    } else if (c >= 'a' && c <= 'z') {
+    else if (c >= 'a' && c <= 'z') 
       a = int(c - 'a') + 1;
-    }
     params[i*3 + 2] = double(a % 3) - 1.0;
     a /= 3;
     params[i*3 + 1] = double(a % 3) - 1.0;
@@ -90,7 +97,8 @@ static void StringToParams(const std::string& str, double* params) {
   }
 }
 
-static sf::RectangleShape MakeBoundsShape(const sf::Text& text) {
+static sf::RectangleShape MakeBoundsShape(const sf::Text& text) 
+{
   sf::RectangleShape blackBox;
   const sf::FloatRect textBounds = text.getGlobalBounds();
   blackBox.setPosition(textBounds.left, textBounds.top);
@@ -110,7 +118,8 @@ static sf::RectangleShape MakeBoundsShape(const sf::Text& text) {
     ss << x; \
     isFirst = false; \
   } 
-static std::string MakeEquationStr(double* params) {
+static std::string MakeEquationStr(double* params) 
+{
   std::stringstream ss;
   bool isFirst = true;
   SIGN_OR_SKIP(0, "x\u00b2");
@@ -125,13 +134,15 @@ static std::string MakeEquationStr(double* params) {
   return ss.str();
 }
 
-static void ResetPlot() {
+static void ResetPlot() 
+{
   plot_scale = 0.25f;
   plot_x = 0.0f;
   plot_y = 0.0f;
 }
 
-static void GenerateNew(sf::RenderWindow& window, double& t, double* params) {
+static void GenerateNew(sf::RenderWindow& window, double& t, double* params) 
+{
   t = t_start;
   equ_code = ParamsToString(params);
   const std::string equation_str =
@@ -147,7 +158,8 @@ static void GenerateNew(sf::RenderWindow& window, double& t, double* params) {
   window.clear();
 }
 
-static void MakeTText(double t) {
+static void MakeTText(double t) 
+{
   t_text.setCharacterSize(30);
   t_text.setFont(font);
   t_text.setString("t = " + std::to_string(t));
@@ -156,7 +168,8 @@ static void MakeTText(double t) {
   t_box = MakeBoundsShape(t_text);
 }
 
-static void CreateRenderWindow(sf::RenderWindow& window) {
+static void CreateRenderWindow(sf::RenderWindow& window) 
+{
   //GL settings
   sf::ContextSettings settings;
   settings.depthBits = 24;
@@ -174,12 +187,14 @@ static void CreateRenderWindow(sf::RenderWindow& window) {
   window.requestFocus();
 }
 
-static void CenterPlot(const std::vector<sf::Vector2f>& history) {
+static void CenterPlot(const std::vector<sf::Vector2f>& history) 
+{
   float min_x = FLT_MAX;
   float max_x = -FLT_MAX;
   float min_y = FLT_MAX;
   float max_y = -FLT_MAX;
-  for (size_t i = 0; i < history.size(); ++i) {
+  for (size_t i = 0; i < history.size(); ++i) 
+  {
     min_x = std::fmin(min_x, history[i].x);
     max_x = std::fmax(max_x, history[i].x);
     min_y = std::fmin(min_y, history[i].y);
@@ -206,14 +221,16 @@ struct Res {
 };
 */
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
     usage();
   //Set random seed
   rand_gen.seed((unsigned int)time(0));
 
   //Load the font
   //const Res res_font(IDR_FONT);
-  if (!font.loadFromFile("./Roboto-Regular.ttf")) {
+  if (!font.loadFromFile("./Roboto-Regular.ttf")) 
+  {
     std::cerr << "FATAL: Failed to load font." << std::endl;
     system("pause");
     return 1;
@@ -222,7 +239,8 @@ int main(int argc, char *argv[]) {
   //Create the window
   const sf::VideoMode screenSize = sf::VideoMode::getDesktopMode();
   window_bits = screenSize.bitsPerPixel;
-  if (fullscreen) {
+  if (fullscreen) 
+  {
     window_w = screenSize.width;
     window_h = screenSize.height;
   }
@@ -244,9 +262,8 @@ int main(int argc, char *argv[]) {
 
   //Setup the vertex array
   std::vector<sf::Vertex> vertex_array(iters*steps_per_frame);
-  for (size_t i = 0; i < vertex_array.size(); ++i) {
+  for (size_t i = 0; i < vertex_array.size(); ++i)
     vertex_array[i].color = GetRandColor(i % iters);
-  }
 
   //Initialize random parameters
   ResetPlot();
@@ -258,67 +275,79 @@ int main(int argc, char *argv[]) {
     while (window.isOpen()) {
       sf::Event event;
       while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed) 
+        {
           window.close();
           break;
-        } else if (event.type == sf::Event::KeyPressed) {
+        } 
+        else if (event.type == sf::Event::KeyPressed) 
+        {
           const sf::Keyboard::Key keycode = event.key.code;
-          if (keycode == sf::Keyboard::Escape) {
+          if (keycode == sf::Keyboard::Escape) 
+          {
             window.close();
             break;
-          } else if (keycode == sf::Keyboard::A) {
+          } 
+          else if (keycode == sf::Keyboard::A) 
             shuffle_equ = true;
-          } else if (keycode == sf::Keyboard::C) {
+          else if (keycode == sf::Keyboard::C) 
             CenterPlot(history);
-          } else if (keycode == sf::Keyboard::D) {
+          else if (keycode == sf::Keyboard::D) 
             dot_type = (dot_type + 1) % 3;
-          } else if (keycode == sf::Keyboard::I) {
+          else if (keycode == sf::Keyboard::I) 
             iteration_limit = !iteration_limit;
-          } else if (keycode == sf::Keyboard::L) {
+          else if (keycode == sf::Keyboard::L) 
+          {
             shuffle_equ = false;
             load_started = true;
             paused = false;
             window.close();
-          } else if (keycode == sf::Keyboard::N) {
+          } 
+          else if (keycode == sf::Keyboard::N) 
+          {
             ResetPlot();
 
             RandParams(params);
             GenerateNew(window, t, params);
-          } else if (keycode == sf::Keyboard::P) {
+          } 
+          else if (keycode == sf::Keyboard::P) 
             paused = !paused;
-          } else if (keycode == sf::Keyboard::R) {
+          else if (keycode == sf::Keyboard::R) 
             shuffle_equ = false;
-          } else if (keycode == sf::Keyboard::S) {
+          else if (keycode == sf::Keyboard::S) 
+          {
             std::ofstream fout("saved.txt", std::ios::app);
             fout << equ_code << std::endl;
             std::cout << "Saved: " << equ_code << std::endl;
-          } else if (keycode == sf::Keyboard::T) {
+          } 
+          else if (keycode == sf::Keyboard::T) 
             trail_type = (trail_type + 1) % 4;
-          }
         }
       }
 
       //Change simulation speed if using shift modifiers
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) 
         speed_mult = 0.1;
-      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) {
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) 
         speed_mult = 10.0;
-      } else {
+      else 
         speed_mult = 1.0;
-      }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) 
         speed_mult = -speed_mult;
-      }
 
       //Skip all drawing if paused
-      if (paused) {
+      if (paused) 
+      {
         window.display();
         continue;
       }
 
       //Automatic restart
-      if (t > t_end) {
-        if (shuffle_equ) {
+      if (t > t_end) 
+      {
+        if (shuffle_equ) 
+        {
           ResetPlot();
           RandParams(params);
         }
@@ -334,7 +363,8 @@ int main(int argc, char *argv[]) {
 
       static const sf::Uint8 fade_speeds[] = { 10,2,0,255 };
       const sf::Uint8 fade_speed = fade_speeds[trail_type];
-      if (fade_speed >= 1) {
+      if (fade_speed >= 1) 
+      {
         fullscreen_rect.setFillColor(sf::Color(fade_speed, fade_speed, fade_speed, 0));
         window.draw(fullscreen_rect, renderBlur);
       }
@@ -345,12 +375,14 @@ int main(int argc, char *argv[]) {
       rolling_delta = rolling_delta*0.99 + delta*0.01;
 
       //Apply chaos
-      for (int step = 0; step < steps; ++step) {
+      for (int step = 0; step < steps; ++step) 
+      {
         bool isOffScreen = true;
         double x = t;
         double y = t;
 
-        for (int iter = 0; iter < iters; ++iter) {
+        for (int iter = 0; iter < iters; ++iter) 
+        {
           const double xx = x * x;
           const double yy = y * y;
           const double tt = t * t;
@@ -362,14 +394,16 @@ int main(int argc, char *argv[]) {
           x = nx;
           y = ny;
           sf::Vector2f screenPt = ToScreen(x, y);
-          if (iteration_limit && iter < 100) {
+          if (iteration_limit && iter < 100) 
+          {
             screenPt.x = FLT_MAX;
             screenPt.y = FLT_MAX;
           }
           vertex_array[step*iters + iter].position = screenPt;
 
           //Check if dynamic delta should be adjusted
-          if (screenPt.x > 0.0f && screenPt.y > 0.0f && screenPt.x < window_w && screenPt.y < window_h) {
+          if (screenPt.x > 0.0f && screenPt.y > 0.0f && screenPt.x < window_w && screenPt.y < window_h) 
+          {
             const float dx = history[iter].x - float(x);
             const float dy = history[iter].y - float(y);
             const double dist = double(500.0f * std::sqrt(dx*dx + dy*dy));
@@ -381,11 +415,10 @@ int main(int argc, char *argv[]) {
         }
 
         //Update the t variable
-        if (isOffScreen) {
+        if (isOffScreen) 
           t += 0.01;
-        } else {
+        else
           t += rolling_delta;
-        }
       }
 
       //Draw new points
@@ -407,7 +440,9 @@ int main(int argc, char *argv[]) {
       window.display();
     }
 
-    if (load_started) {
+    // TODO STYLE: no else block with single statement
+    if (load_started) 
+    {
       std::string code;
       std::cout << "Enter 6 letter code:" << std::endl;
       std::cin >> code;
@@ -416,10 +451,9 @@ int main(int argc, char *argv[]) {
       StringToParams(code, params);
       GenerateNew(window, t, params);
       load_started = false;
-    } else {
+    } 
+    else 
       break;
-    }
   }
-
-  return 0;
 }
+
