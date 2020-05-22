@@ -1,0 +1,10 @@
+# Vim
+*.swp
+*.swo
+
+# C++
+*.o
+*.a
+
+# SFML
+sfml-app
