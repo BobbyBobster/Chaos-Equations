@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
     //const Res res_font(IDR_FONT);
     if (!font.loadFromFile("./Roboto-Regular.ttf")) 
     {
-        std::cerr << "FATAL: Failed to load font." << std::endl;
+        std::cerr << "FATAL: Failed to load font." << '\n';
         system("pause");
         return 1;
     }
@@ -319,8 +319,8 @@ int main(int argc, char *argv[])
                     else if (keycode == sf::Keyboard::S) 
                     {
                         std::ofstream fout("saved.txt", std::ios::app);
-                        fout << equ_code << std::endl;
-                        std::cout << "Saved: " << equ_code << std::endl;
+                        fout << equ_code << '\n';
+                        std::cout << "Saved: " << equ_code << '\n';
                     } 
                     else if (keycode == sf::Keyboard::T) 
                         trail_type = (trail_type + 1) % 4;
@@ -459,7 +459,7 @@ int main(int argc, char *argv[])
         if (load_started) 
         {
             std::string code;
-            std::cout << "Enter 6 letter code:" << std::endl;
+            std::cout << "Enter 6 letter code:" << '\n';
             std::cin >> code;
             CreateRenderWindow(window);
             ResetPlot();
