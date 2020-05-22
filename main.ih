@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
 #include <iostream>
+#include <string>
 #include <random>
 #include <sstream>
 #include <cassert>
 #include <fstream>
 #include <cfloat>
+
+void usage();
 

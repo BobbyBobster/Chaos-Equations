@@ -207,37 +207,7 @@ struct Res {
 */
 
 int main(int argc, char *argv[]) {
-  std::cout << "=========================================================" << std::endl;
-  std::cout << std::endl;
-  std::cout << "                      Chaos Equations" << std::endl;
-  std::cout << std::endl;
-  std::cout << "    These are plots of random recursive equations, which" << std::endl;
-  std::cout << "often produce chaos, and results in beautiful patterns." << std::endl;
-  std::cout << "For every time t, a point (x,y) is initialized to (t,t)." << std::endl;
-  std::cout << "The equation is applied to the point many times, and each" << std::endl;
-  std::cout << "iteration is drawn in a unique color." << std::endl;
-  std::cout << std::endl;
-  std::cout << "=========================================================" << std::endl;
-  std::cout << std::endl;
-  std::cout << "Controls:" << std::endl;
-  std::cout << "      'A' - Automatic Mode (randomize equations)" << std::endl;
-  std::cout << "      'R' - Repeat Mode (keep same equation)" << std::endl;
-  std::cout << std::endl;
-  std::cout << "      'C' - Center points" << std::endl;
-  std::cout << "      'D' - Dot size Toggle" << std::endl;
-  std::cout << "      'I' - Iteration Limit Toggle" << std::endl;
-  std::cout << "      'T' - Trail Toggle" << std::endl;
-  std::cout << std::endl;
-  std::cout << "      'P' - Pause" << std::endl;
-  std::cout << " 'LShift' - Slow Down" << std::endl;
-  std::cout << " 'RShift' - Speed Up" << std::endl;
-  std::cout << "  'Space' - Reverse" << std::endl;
-  std::cout << std::endl;
-  std::cout << "     'N' - New Equation (random)" << std::endl;
-  std::cout << "     'L' - Load Equation" << std::endl;
-  std::cout << "     'S' - Save Equation" << std::endl;
-  std::cout << std::endl;
-
+    usage();
   //Set random seed
   rand_gen.seed((unsigned int)time(0));
 
