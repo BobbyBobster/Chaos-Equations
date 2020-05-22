@@ -48,10 +48,13 @@ int main()
     GenerateNew(window, t, params);
 
     //Main Loop
-    while (true) {
-        while (window.isOpen()) {
+    while (true) 
+    {
+        while (window.isOpen()) 
+        {
             sf::Event event;
-            while (window.pollEvent(event)) {
+            while (window.pollEvent(event)) 
+            {
                 if (event.type == sf::Event::Closed) 
                 {
                     window.close();
@@ -59,46 +62,49 @@ int main()
                 } 
                 else if (event.type == sf::Event::KeyPressed) 
                 {
-                    sf::Keyboard::Key const keycode = event.key.code;
-                    if (keycode == sf::Keyboard::Escape) 
+                    switch (sf::Keyboard::Key const keycode = event.key.code)
                     {
-                        window.close();
-                        break;
-                    } 
-                    else if (keycode == sf::Keyboard::A) 
-                        shuffle_equ = true;
-                    else if (keycode == sf::Keyboard::C) 
-                        CenterPlot(history);
-                    else if (keycode == sf::Keyboard::D) 
-                        dot_type = (dot_type + 1) % 3;
-                    else if (keycode == sf::Keyboard::I) 
-                        iteration_limit = !iteration_limit;
-                    else if (keycode == sf::Keyboard::L) 
-                    {
-                        shuffle_equ = false;
-                        load_started = true;
-                        paused = false;
-                        window.close();
-                    } 
-                    else if (keycode == sf::Keyboard::N) 
-                    {
-                        ResetPlot();
-
-                        RandParams(params);
-                        GenerateNew(window, t, params);
-                    } 
-                    else if (keycode == sf::Keyboard::P) 
-                        paused = !paused;
-                    else if (keycode == sf::Keyboard::R) 
-                        shuffle_equ = false;
-                    else if (keycode == sf::Keyboard::S) 
-                    {
-                        std::ofstream fout("saved.txt", std::ios::app);
-                        fout << equ_code << '\n';
-                        std::cout << "Saved: " << equ_code << '\n';
-                    } 
-                    else if (keycode == sf::Keyboard::T) 
-                        trail_type = (trail_type + 1) % 4;
+                        case sf::Keyboard::Escape:
+                            window.close();
+                            break;
+                        case sf::Keyboard::A:
+                            shuffle_equ = true;
+                            break;
+                        case sf::Keyboard::C:
+                            CenterPlot(history);
+                            break;
+                        case sf::Keyboard::D:
+                            dot_type = (dot_type + 1) % 3;
+                            break;
+                        case sf::Keyboard::I:
+                            iteration_limit = !iteration_limit;
+                            break;
+                        case sf::Keyboard::L:
+                            shuffle_equ = false;
+                            load_started = true;
+                            paused = false;
+                            window.close();
+                            break;
+                        case sf::Keyboard::N:
+                            ResetPlot();
+                            RandParams(params);
+                            GenerateNew(window, t, params);
+                            break;
+                        case sf::Keyboard::P:
+                            paused = !paused;
+                            break;
+                        case sf::Keyboard::R:
+                            shuffle_equ = false;
+                            break;
+                        case sf::Keyboard::T:
+                            trail_type = (trail_type + 1) % 4;
+                            break;
+                        case sf::Keyboard::S:
+                            std::ofstream fout("saved.txt", std::ios::app);
+                            fout << equ_code << '\n';
+                            std::cout << "Saved: " << equ_code << '\n';
+                            break;
+                    }
                 }
             }
 
