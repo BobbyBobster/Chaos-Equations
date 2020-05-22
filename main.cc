@@ -3,11 +3,9 @@
 int main() 
 {
     usage();
-    //Set random seed
+
     rand_gen.seed((unsigned int)time(0));
 
-    //Load the font
-    //const Res res_font(IDR_FONT);
     if (!font.loadFromFile("./Roboto-Regular.ttf")) 
     {
         std::cerr << "FATAL: Failed to load font." << '\n';
@@ -16,7 +14,7 @@ int main()
     }
 
     //Create the window
-    const sf::VideoMode screenSize = sf::VideoMode::getDesktopMode();
+    sf::VideoMode const screenSize = sf::VideoMode::getDesktopMode();
     window_bits = screenSize.bitsPerPixel;
     if (fullscreen) 
     {
@@ -61,7 +59,7 @@ int main()
                 } 
                 else if (event.type == sf::Event::KeyPressed) 
                 {
-                    const sf::Keyboard::Key keycode = event.key.code;
+                    sf::Keyboard::Key const keycode = event.key.code;
                     if (keycode == sf::Keyboard::Escape) 
                     {
                         window.close();
@@ -141,8 +139,8 @@ int main()
             fullscreen_rect.setPosition(0.0f, 0.0f);
             fullscreen_rect.setSize(sf::Vector2f(window_w, window_h));
 
-            static const sf::Uint8 fade_speeds[] = { 10,2,0,255 };
-            const sf::Uint8 fade_speed = fade_speeds[trail_type];
+            static sf::Uint8 const fade_speeds[] = { 10,2,0,255 };
+            sf::Uint8 const fade_speed = fade_speeds[trail_type];
             if (fade_speed >= 1) 
             {
                 fullscreen_rect.setFillColor(
@@ -151,8 +149,8 @@ int main()
             }
 
             //Smooth out the stepping speed.
-            const int steps = steps_per_frame;
-            const double delta = delta_per_step * speed_mult;
+            int const steps = steps_per_frame;
+            double const delta = delta_per_step * speed_mult;
             rolling_delta = rolling_delta*0.99 + delta*0.01;
 
             //Apply chaos
@@ -164,17 +162,17 @@ int main()
 
                 for (int iter = 0; iter < iters; ++iter) 
                 {
-                    const double xx = x * x;
-                    const double yy = y * y;
-                    const double tt = t * t;
-                    const double xy = x * y;
-                    const double xt = x * t;
-                    const double yt = y * t;
-                    const double nx = xx*params[0] + yy*params[1] 
+                    double const xx = x * x;
+                    double const yy = y * y;
+                    double const tt = t * t;
+                    double const xy = x * y;
+                    double const xt = x * t;
+                    double const yt = y * t;
+                    double const nx = xx*params[0] + yy*params[1] 
                         + tt*params[2] + xy*params[3] + xt*params[4] 
                         + yt*params[5] + x*params[6] + y*params[7] 
                         + t*params[8];
-                    const double ny = xx*params[9] + yy*params[10] 
+                    double const ny = xx*params[9] + yy*params[10] 
                         + tt*params[11] + xy*params[12] + xt*params[13] 
                         + yt*params[14] + x*params[15] + y*params[16] 
                         + t*params[17];
@@ -192,9 +190,9 @@ int main()
                     if (screenPt.x > 0.0f && screenPt.y > 0.0f && 
                             screenPt.x < window_w && screenPt.y < window_h) 
                     {
-                        const float dx = history[iter].x - float(x);
-                        const float dy = history[iter].y - float(y);
-                        const double dist = 
+                        float const dx = history[iter].x - float(x);
+                        float const dy = history[iter].y - float(y);
+                        double const dist = 
                             double(500.0f * std::sqrt(dx*dx + dy*dy));
                         rolling_delta = std::min(rolling_delta, 
                                 std::max(delta / (dist + 1e-5), 
