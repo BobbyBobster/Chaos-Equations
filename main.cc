@@ -96,13 +96,15 @@ int main()
                         case sf::Keyboard::R:
                             shuffle_equ = false;
                             break;
-                        case sf::Keyboard::T:
-                            trail_type = (trail_type + 1) % 4;
-                            break;
                         case sf::Keyboard::S:
+                        {
                             std::ofstream fout("saved.txt", std::ios::app);
                             fout << equ_code << '\n';
                             std::cout << "Saved: " << equ_code << '\n';
+                            break;
+                        }
+                        case sf::Keyboard::T:
+                            trail_type = (trail_type + 1) % 4;
                             break;
                     }
                 }
