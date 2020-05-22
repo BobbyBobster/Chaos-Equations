@@ -5,7 +5,6 @@
 #include <sstream>
 #include <cassert>
 #include <fstream>
-#include "resource.h"
 #include <cfloat>
 
 //Global constants
