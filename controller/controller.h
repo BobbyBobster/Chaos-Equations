@@ -13,6 +13,7 @@ class Controller
         Controller(); // creates a window
 
         void run(); // main loop
+
         void checkMenuInput(); // events for keypresses
 };
 

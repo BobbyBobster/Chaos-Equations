@@ -32,11 +32,11 @@ static double const delta_per_step = 1e-5;
 static double const delta_minimum = 1e-7;
 static double const t_start = -3.0;
 static double const t_end = 3.0;
-static bool const fullscreen = false;
+//static bool const fullscreen = false;
 
 //Global variables
-static int window_w = 800;
-static int window_h = 450;
+//static int window_w = 800;
+//static int window_h = 450;
 static int window_bits = 24;
 static float plot_scale = 0.25f;
 static float plot_x = 0.0f;

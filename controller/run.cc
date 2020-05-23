@@ -7,7 +7,6 @@ void Controller::run()
         while (d_window.isOpen()) 
         {
             checkMenuInput();
-
         }
         //Flip the screen buffer
         d_window.display();
