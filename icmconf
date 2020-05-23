@@ -6,7 +6,7 @@
 #define DEFCOM "program"
 
 #define CXX "g++"
-#define CXXFLAGS " -std=c++2a -O2"
+#define CXXFLAGS " -std=c++2a -Wall -Wextra -O2"
 #define IH ".ih"
 #define PRECOMP "-x c++-header"
 //#define REFRESH

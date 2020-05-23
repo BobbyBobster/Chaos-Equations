@@ -62,7 +62,7 @@ int main()
                 } 
                 else if (event.type == sf::Event::KeyPressed) 
                 {
-                    switch (sf::Keyboard::Key const keycode = event.key.code)
+                    switch (event.key.code)
                     {
                         case sf::Keyboard::Escape:
                             window.close();
@@ -105,6 +105,8 @@ int main()
                         }
                         case sf::Keyboard::T:
                             trail_type = (trail_type + 1) % 4;
+                            break;
+                        default:
                             break;
                     }
                 }
