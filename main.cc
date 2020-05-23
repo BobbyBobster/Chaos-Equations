@@ -39,8 +39,8 @@ int main()
 
     //Setup the vertex array
     std::vector<sf::Vertex> vertex_array(iters*steps_per_frame);
-    for (size_t i = 0; i < vertex_array.size(); ++i)
-        vertex_array[i].color = GetRandColor(i % iters);
+    for (size_t idx = 0; idx != vertex_array.size(); ++idx)
+        vertex_array[idx].color = GetRandColor(idx % iters);
 
     //Initialize random parameters
     ResetPlot();
@@ -157,18 +157,18 @@ int main()
             }
 
             //Smooth out the stepping speed.
-            int const steps = steps_per_frame;
+            size_t const steps = steps_per_frame;
             double const delta = delta_per_step * speed_mult;
             rolling_delta = rolling_delta*0.99 + delta*0.01;
 
             //Apply chaos
-            for (int step = 0; step < steps; ++step) 
+            for (size_t step = 0; step != steps; ++step) 
             {
                 bool isOffScreen = true;
                 double x = t;
                 double y = t;
 
-                for (int iter = 0; iter < iters; ++iter) 
+                for (size_t iter = 0; iter != iters; ++iter) 
                 {
                     double const xx = x * x;
                     double const yy = y * y;
