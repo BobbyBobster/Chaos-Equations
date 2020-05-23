@@ -238,7 +238,6 @@ int main()
             window.display();
         }
 
-        // TODO STYLE: no else block with single statement
         if (load_started) 
         {
             std::string code;
@@ -250,8 +249,6 @@ int main()
             GenerateNew(window, t, params);
             load_started = false;
         } 
-        else 
-            break;
     }
 }
 
