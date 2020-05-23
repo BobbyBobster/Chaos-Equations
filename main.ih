@@ -23,6 +23,7 @@ void RandParams(double *params);
 sf::Vector2f ToScreen(double x, double y);
 sf::Color GetRandColor(int i);
 
+/*
 //Global constants
 static int const num_params = 18;
 static int const iters = 800;
@@ -47,4 +48,5 @@ static std::string equ_code;
 static sf::RectangleShape equ_box;
 static sf::Text t_text;
 static sf::RectangleShape t_box;
+*/
 

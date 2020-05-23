@@ -6,12 +6,14 @@
 
 class Controller 
 {
-    sf::Window &d_window;
+    sf::Window d_window;
+
     
     public:
-        Controller(sf::Window window);
+        Controller(); // creates a window
 
         void run(); // main loop
+        void checkMenuInput(); // events for keypresses
 };
 
 #endif

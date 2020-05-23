@@ -4,67 +4,18 @@ void Controller::run()
 {
     while (true)
     {
-        while (window.isOpen()) 
+        while (d_window.isOpen()) 
         {
-            sf::Event event;
-            while (window.pollEvent(event)) 
-            {
-                if (event.type == sf::Event::Closed) 
-                {
-                    window.close();
-                    break;
-                } 
-                else if (event.type == sf::Event::KeyPressed) 
-                {
-                    switch (sf::Keyboard::Key const keycode = event.key.code)
-                    {
-                        case sf::Keyboard::Escape:
-                            window.close();
-                            break;
-                        case sf::Keyboard::A:
-                            shuffle_equ = true;
-                            break;
-                        case sf::Keyboard::C:
-                            CenterPlot(history);
-                            break;
-                        case sf::Keyboard::D:
-                            dot_type = (dot_type + 1) % 3;
-                            break;
-                        case sf::Keyboard::I:
-                            iteration_limit = !iteration_limit;
-                            break;
-                        case sf::Keyboard::L:
-                            shuffle_equ = false;
-                            load_started = true;
-                            paused = false;
-                            window.close();
-                            break;
-                        case sf::Keyboard::N:
-                            ResetPlot();
-                            RandParams(params);
-                            GenerateNew(window, t, params);
-                            break;
-                        case sf::Keyboard::P:
-                            paused = !paused;
-                            break;
-                        case sf::Keyboard::R:
-                            shuffle_equ = false;
-                            break;
-                        case sf::Keyboard::S:
-                        {
-                            std::ofstream fout("saved.txt", std::ios::app);
-                            fout << equ_code << '\n';
-                            std::cout << "Saved: " << equ_code << '\n';
-                            break;
-                        }
-                        case sf::Keyboard::T:
-                            trail_type = (trail_type + 1) % 4;
-                            break;
-                    }
-                }
-            }
+            checkMenuInput();
+
+        }
+        //Flip the screen buffer
+        d_window.display();
+    }
+}
 
             //Change simulation speed if using shift modifiers
+            /*
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) 
                 speed_mult = 0.1;
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) 
@@ -78,7 +29,7 @@ void Controller::run()
             //Skip all drawing if paused
             if (paused) 
             {
-                window.display();
+                d_window.display();
                 continue;
             }
 
@@ -90,7 +41,7 @@ void Controller::run()
                     ResetPlot();
                     RandParams(params);
                 }
-                GenerateNew(window, t, params);
+                GenerateNew(d_window, t, params);
             }
 
             sf::BlendMode fade(sf::BlendMode::One, sf::BlendMode::One, 
@@ -107,14 +58,15 @@ void Controller::run()
             {
                 fullscreen_rect.setFillColor(
                         sf::Color(fade_speed, fade_speed, fade_speed, 0));
-                window.draw(fullscreen_rect, renderBlur);
+                d_window.draw(fullscreen_rect, renderBlur);
             }
 
             //Smooth out the stepping speed.
             int const steps = steps_per_frame;
             double const delta = delta_per_step * speed_mult;
             rolling_delta = rolling_delta*0.99 + delta*0.01;
-
+            */
+            /*
             //Apply chaos
             for (int step = 0; step < steps; ++step) 
             {
@@ -171,37 +123,36 @@ void Controller::run()
                 else
                     t += rolling_delta;
             }
+            */
 
+            /*
             //Draw new points
             //static const float dot_sizes[] = { 1.0f, 3.0f, 10.0f };
             //glEnable(GL_POINT_SMOOTH);
             //glPointSize(dot_sizes[dot_type]);
-            window.draw(vertex_array.data(), 
+            d_window.draw(vertex_array.data(), 
                     vertex_array.size(), sf::PrimitiveType::Points);
 
             //Draw the equation
-            window.draw(equ_box);
-            window.draw(equ_text);
+            d_window.draw(equ_box);
+            d_window.draw(equ_text);
 
             //Draw the current t-value
             MakeTText(t);
-            window.draw(t_box);
-            window.draw(t_text);
+            d_window.draw(t_box);
+            d_window.draw(t_text);
+            */
 
-            //Flip the screen buffer
-            window.display();
-        }
-
+        /*
         if (load_started) 
         {
             std::string code;
             std::cout << "Enter 6 letter code:" << '\n';
             std::cin >> code;
-            CreateRenderWindow(window);
+            CreateRenderWindow(d_window);
             ResetPlot();
             StringToParams(code, params);
-            GenerateNew(window, t, params);
+            GenerateNew(d_window, t, params);
             load_started = false;
         } 
-    }
-}
+        */
