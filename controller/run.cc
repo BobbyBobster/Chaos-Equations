@@ -20,28 +20,32 @@ void Controller::run()
     while (true)
     {
         while (d_window.isOpen()) 
+        {
             checkMenuInput();
+            checkModifiers();
 
-        checkModifiers();
+            // Skip all drawing if paused
+            if (d_paused) 
+            {
+                d_window.display();
+                continue;
+            }
 
-        // Skip all drawing if paused
-        if (d_paused) 
-        {
+            
+            // XXX Weird way to do this!
+            sf::VertexArray pointsToDraw = d_model.update();
+            for (size_t idx = 0, size = pointsToDraw.getVertexCount(); 
+                    idx != size; ++idx)
+            {
+                pointsToDraw[idx] = 
+                    ToScreen(pointsToDraw[idx].position.x, pointsToDraw[idx].position.y);
+            }
+
+            d_window.setActive();
+            d_window.draw(pointsToDraw);
+
             d_window.display();
-            continue;
         }
-
-        
-        // XXX Weird way to do this!
-        sf::VertexArray pointsToDraw = d_model.update();
-        for (size_t idx = 0, size = pointsToDraw.getVertexCount(); 
-                idx != size; ++idx)
-        {
-            pointsToDraw[idx] = 
-                ToScreen(pointsToDraw[idx].position.x, pointsToDraw[idx].position.y);
-        }
-
-        d_window.display();
     }
 }
 

@@ -7,7 +7,7 @@
 
 class Controller 
 {
-    sf::Window d_window;
+    sf::RenderWindow d_window;
     Model d_model;
 
     float d_multiplier = 1.0;
