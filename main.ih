@@ -10,41 +10,4 @@
 #include <cfloat>
 
 void usage();
-void CenterPlot(std::vector<sf::Vector2f> const &history);
-void CreateRenderWindow(sf::RenderWindow &window);
-void MakeTText(double t);
-void GenerateNew(sf::RenderWindow &window, double &t, double *params);
-void ResetPlot();
-std::string MakeEquationStr(double *params);
-sf::RectangleShape MakeBoundsShape(sf::Text const &text);
-void StringToParams(std::string const &str, double *params);
-std::string ParamsToString(double const *params);
-void RandParams(double *params);
-sf::Vector2f ToScreen(double x, double y);
-sf::Color GetRandColor(int i);
-
-//Global constants
-static int const num_params = 18;
-static int const iters = 500;
-static int const steps_per_frame = 300;
-static double const delta_per_step = 1e-5;
-static double const delta_minimum = 1e-7;
-static double const t_start = -3.0;
-static double const t_end = 3.0;
-static bool const fullscreen = false;
-
-//Global variables
-static int window_w = 800;
-static int window_h = 450;
-static int window_bits = 24;
-static float plot_scale = 0.25f;
-static float plot_x = 0.0f;
-static float plot_y = 0.0f;
-static std::mt19937 rand_gen;
-static sf::Font font;
-static sf::Text equ_text;
-static std::string equ_code;
-static sf::RectangleShape equ_box;
-static sf::Text t_text;
-static sf::RectangleShape t_box;
 

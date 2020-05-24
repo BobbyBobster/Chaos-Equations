@@ -2,7 +2,6 @@
 #define CONTROLLER_H_
 
 #include <SFML/Graphics.hpp>
-//#include <SFML/OpenGL.hpp>
 #include "../model/model.h"
 
 class Controller 
@@ -15,6 +14,7 @@ class Controller
     
     public:
         Controller(); // creates a window
+        Controller(Model model); // TODO
 
         void run(); // main loop
 
