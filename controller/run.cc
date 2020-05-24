@@ -1,36 +1,75 @@
 #include "controller.ih"
+        // XXX THIS SHOULD NOT BE HERE!
+sf::Vector2f Controller::ToScreen(double x, double y) 
+{
+    
+int window_w = 800;
+int window_h = 450;
+float plot_scale = 0.25f;
+float plot_x = 0.0f;
+float plot_y = 0.0f;
+
+    float const s = plot_scale * float(window_h / 2);
+    float const nx = float(window_w) * 0.5f + (float(x) - plot_x) * s;
+    float const ny = float(window_h) * 0.5f + (float(y) - plot_y) * s;
+    return sf::Vector2f(nx, ny);
+}
 
 void Controller::run()
 {
     while (true)
     {
         while (d_window.isOpen()) 
-        {
             checkMenuInput();
+
+        checkModifiers();
+
+        // Skip all drawing if paused
+        if (d_paused) 
+        {
+            d_window.display();
+            continue;
         }
-        //Flip the screen buffer
+
+        
+        // XXX Weird way to do this!
+        sf::VertexArray pointsToDraw = d_model.update();
+        for (size_t idx = 0, size = pointsToDraw.getVertexCount(); 
+                idx != size; ++idx)
+        {
+            pointsToDraw[idx] = 
+                ToScreen(pointsToDraw[idx].position.x, pointsToDraw[idx].position.y);
+        }
+
         d_window.display();
     }
 }
 
-            //Change simulation speed if using shift modifiers
             /*
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) 
-                speed_mult = 0.1;
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) 
-                speed_mult = 10.0;
-            else 
-                speed_mult = 1.0;
+    //Simulation variables
+  double t = t_start;
+  std::vector<sf::Vector2f> history(iters);
+  double rolling_delta = delta_per_step;
+  double params[num_params];
+  double speed_mult = 1.0;
+  bool paused = false;
+  int trail_type = 0;
+  int dot_type = 0;
+  bool load_started = false;
+  bool shuffle_equ = true;
+  bool iteration_limit = false;
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) 
-                speed_mult = -speed_mult;
+  //Setup the vertex array
+  std::vector<sf::Vertex> vertex_array(iters*steps_per_frame);
+  for (size_t i = 0; i < vertex_array.size(); ++i) {
+    vertex_array[i].color = GetRandColor(i % iters);
+  }
 
-            //Skip all drawing if paused
-            if (paused) 
-            {
-                d_window.display();
-                continue;
-            }
+  //Initialize random parameters
+  ResetPlot();
+  RandParams(params);
+  GenerateNew(window, t, params);
+
 
             //Automatic restart
             if (t > t_end) 
@@ -67,61 +106,6 @@ void Controller::run()
             */
             /*
             //Apply chaos
-            for (int step = 0; step < steps; ++step) 
-            {
-                bool isOffScreen = true;
-                double x = t;
-                double y = t;
-
-                for (int iter = 0; iter < iters; ++iter) 
-                {
-                    double const xx = x * x;
-                    double const yy = y * y;
-                    double const tt = t * t;
-                    double const xy = x * y;
-                    double const xt = x * t;
-                    double const yt = y * t;
-                    double const nx = xx*params[0] + yy*params[1] 
-                        + tt*params[2] + xy*params[3] + xt*params[4] 
-                        + yt*params[5] + x*params[6] + y*params[7] 
-                        + t*params[8];
-                    double const ny = xx*params[9] + yy*params[10] 
-                        + tt*params[11] + xy*params[12] + xt*params[13] 
-                        + yt*params[14] + x*params[15] + y*params[16] 
-                        + t*params[17];
-                    x = nx;
-                    y = ny;
-                    sf::Vector2f screenPt = ToScreen(x, y);
-                    if (iteration_limit && iter < 100) 
-                    {
-                        screenPt.x = FLT_MAX;
-                        screenPt.y = FLT_MAX;
-                    }
-                    vertex_array[step*iters + iter].position = screenPt;
-
-                    //Check if dynamic delta should be adjusted
-                    if (screenPt.x > 0.0f && screenPt.y > 0.0f && 
-                            screenPt.x < window_w && screenPt.y < window_h) 
-                    {
-                        float const dx = history[iter].x - float(x);
-                        float const dy = history[iter].y - float(y);
-                        double const dist = 
-                            double(500.0f * std::sqrt(dx*dx + dy*dy));
-                        rolling_delta = std::min(rolling_delta, 
-                                std::max(delta / (dist + 1e-5), 
-                                    delta_minimum*speed_mult));
-                        isOffScreen = false;
-                    }
-                    history[iter].x = float(x);
-                    history[iter].y = float(y);
-                }
-
-                //Update the t variable
-                if (isOffScreen) 
-                    t += 0.01;
-                else
-                    t += rolling_delta;
-            }
             */
 
             /*
