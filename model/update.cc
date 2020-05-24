@@ -2,6 +2,9 @@
 
 sf::VertexArray const &Model::update()
 {
+    if (d_time > d_timeinterval[1])
+        d_time = d_timeinterval[0];
+
     double &t = d_time; // TODO: refactor all t variables in this function
     for (size_t step = 0; step != d_stepsPerFrame; ++step)
     {
@@ -40,7 +43,7 @@ sf::VertexArray const &Model::update()
             */
 
             sf::Vector2f point{ x, y };
-            d_vertexArray[step * idx + idx].position = point;
+            d_vertexArray[step * d_iterations + idx].position = point;
 
             //Check if dynamic delta should be adjusted
             /*

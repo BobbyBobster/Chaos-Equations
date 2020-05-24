@@ -1,6 +1,8 @@
 #include "controller.ih"
 
 Controller::Controller()
+:
+    d_model(-3.0, 3.0)
 {
     // XXX No Magic Numbers
     sf::VideoMode const mode{ 800, 450, 24 };

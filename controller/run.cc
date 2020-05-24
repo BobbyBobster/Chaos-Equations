@@ -31,9 +31,15 @@ void Controller::run()
                 continue;
             }
 
-            
-            // XXX Weird way to do this!
+            sf::BlendMode fade(sf::BlendMode::One, sf::BlendMode::One, sf::BlendMode::ReverseSubtract);
+            sf::RenderStates renderBlur(fade); 
+
+            sf::RectangleShape fullscreen_rect;
+            fullscreen_rect.setPosition(0.0f, 0.0f);
+            fullscreen_rect.setSize(sf::Vector2f(800, 450));
+
             sf::VertexArray pointsToDraw = d_model.update();
+            // XXX Weird way to do this!
             for (size_t idx = 0, size = pointsToDraw.getVertexCount(); 
                     idx != size; ++idx)
             {
@@ -41,7 +47,6 @@ void Controller::run()
                     ToScreen(pointsToDraw[idx].position.x, pointsToDraw[idx].position.y);
             }
 
-            d_window.setActive();
             d_window.draw(pointsToDraw);
 
             d_window.display();
