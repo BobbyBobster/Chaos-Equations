@@ -32,17 +32,17 @@ sf::VertexArray const &Model::update()
                 + t*d_params[17];
             x = nx;
             y = ny;
-            //sf::Vector2f screenPt = ToScreen(x, y);
-            /*
-            if (iteration_limit && iter < 100) 
-            {
-                screenPt.x = FLT_MAX;
-                screenPt.y = FLT_MAX;
-            }
-            vertex_array[step*iters + iter].position = screenPt;
-            */
 
-            sf::Vector2f point{ x, y };
+            double px = x;
+            double py = y;
+
+            if (idx < 100) 
+            {
+                px = FLT_MAX;
+                py = FLT_MAX;
+            }
+
+            sf::Vector2f point{ px, py };
             d_vertexArray[step * d_iterations + idx].position = point;
 
             //Check if dynamic delta should be adjusted
@@ -65,7 +65,7 @@ sf::VertexArray const &Model::update()
         }
 
         // Update time
-        t += 0.01;
+        d_time += 0.01;
         /*
         if (isOffScreen) 
             t += 0.01;

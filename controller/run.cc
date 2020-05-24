@@ -31,12 +31,23 @@ void Controller::run()
                 continue;
             }
 
+            // XXX (from here) Why do we need this?
             sf::BlendMode fade(sf::BlendMode::One, sf::BlendMode::One, sf::BlendMode::ReverseSubtract);
             sf::RenderStates renderBlur(fade); 
 
             sf::RectangleShape fullscreen_rect;
             fullscreen_rect.setPosition(0.0f, 0.0f);
             fullscreen_rect.setSize(sf::Vector2f(800, 450));
+
+            static const sf::Uint8 fade_speeds[] = { 10,2,0,255 };
+            const sf::Uint8 fade_speed = fade_speeds[0];
+            if (fade_speed >= 1) 
+            {
+                fullscreen_rect.setFillColor(sf::Color(fade_speed, fade_speed, fade_speed, 0));
+                d_window.draw(fullscreen_rect, renderBlur);
+            }
+            // XXX (until here)
+
 
             sf::VertexArray pointsToDraw = d_model.update();
             // XXX Weird way to do this!
